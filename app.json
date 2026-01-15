@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Coffee Palation",
+    "slug": "coffee-palation",
+    "version": "2.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/character.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/background.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#4A2C2A"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.coffeepalation.game"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/character.png",
+        "backgroundColor": "#4A2C2A"
+      },
+      "package": "com.coffeepalation.game"
+    },
+    "web": {
+      "favicon": "./assets/bean.png",
+      "bundler": "metro",
+      "name": "Coffee Palation",
+      "shortName": "Coffee Palation",
+      "description": "A fun flappy bird style game with a coffee theme. Collect coffee beans and avoid obstacles!",
+      "lang": "en",
+      "themeColor": "#4A2C2A",
+      "backgroundColor": "#FFF8E1"
+    },
+    "plugins": []
+  }
+}

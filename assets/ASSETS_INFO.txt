@@ -1,0 +1,87 @@
+COFFEE PALATION - ASSET GUIDE
+==============================
+
+The game currently uses CSS-based graphics which look great!
+However, you can add custom images if you want.
+
+REQUIRED IMAGE FILES:
+---------------------
+
+1. character.png (recommended: 100x100 pixels)
+   - The coffee cup character
+   - Transparent background (PNG)
+   - Should face right
+
+2. background.png (recommended: 1080x1920 pixels)
+   - Sky/environment background
+   - Gradient from light blue to lighter blue
+   - Can include clouds
+
+3. ground.png (recommended: 1080x160 pixels)
+   - Ground/floor texture
+   - Coffee/dirt colors
+   - Seamless horizontal tile
+
+4. pipe.png (recommended: 130x800 pixels)
+   - Green pipe obstacle
+   - Can be solid or textured
+   - Will be stretched vertically
+
+5. bean.png (recommended: 64x64 pixels)
+   - Coffee bean collectible
+   - Transparent background
+   - Brown coffee bean
+
+6. logo.png (recommended: 600x200 pixels)
+   - Game title logo
+   - "Coffee Palation" text
+   - Transparent background
+
+HOW TO ENABLE IMAGES:
+--------------------
+
+1. Add your PNG files to this /assets folder
+2. Open App.js
+3. Find the ASSETS CONFIG section
+4. Set: const USE_IMAGE_ASSETS = true;
+5. Uncomment the ASSETS object with require() statements
+6. Restart the app
+
+IMAGE SPECIFICATIONS:
+--------------------
+
+Format: PNG with transparency
+Color Mode: RGBA
+Resolution: 72-144 DPI for mobile
+
+RECOMMENDED TOOLS:
+-----------------
+
+- Figma (free)
+- Canva (free)
+- Adobe Photoshop
+- GIMP (free)
+- Procreate (iPad)
+
+FREE ASSET RESOURCES:
+--------------------
+
+- OpenGameArt.org
+- Kenney.nl
+- itch.io/game-assets
+- GameArt2D.com
+
+CURRENT CSS GRAPHICS:
+--------------------
+
+The game includes beautiful CSS-based graphics:
+- Animated coffee cup with steam effect
+- Pulsing coffee beans
+- Gradient sky background
+- Textured pipes with caps
+- Grass and dirt ground layers
+
+These work on all platforms without any image files!
+
+==============================
+
