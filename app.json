@@ -33,9 +33,7 @@
       "description": "A fun flappy bird style game with a coffee theme. Collect coffee beans and avoid obstacles!",
       "lang": "en",
       "themeColor": "#4A2C2A",
-      "backgroundColor": "#FFF8E1",
-      "output": "static",
-      "baseUrl": "/coffee_palation"
+      "backgroundColor": "#FFF8E1"
     },
     "plugins": []
   }

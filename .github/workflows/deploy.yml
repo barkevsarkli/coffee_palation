@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Build Expo web
-        run: npx expo export --platform web
+        run: npx expo export:web
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -39,7 +39,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './web-build'
 
   deploy:
     environment:
