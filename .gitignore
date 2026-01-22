@@ -31,3 +31,6 @@ coverage/
 # Expo
 .expo-shared/
 .vercel
+
+# Local Netlify folder
+.netlify
