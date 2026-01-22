@@ -1,7 +1,7 @@
 node_modules/
 .expo/
 .expo-shared/
-dist/
+# dist/ - uncomment if not using GitHub Pages
 npm-debug.*
 *.jks
 *.p8
@@ -30,3 +30,4 @@ coverage/
 
 # Expo
 .expo-shared/
+.vercel
