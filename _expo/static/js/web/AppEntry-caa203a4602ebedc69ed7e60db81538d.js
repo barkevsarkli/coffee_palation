@@ -231,8 +231,8 @@ __d(function(_g,r,i,_a,_m,_e,_d){
    * LICENSE file in the root directory of this source tree.
    */
 'use strict';var e=r(_d[0]),o=Symbol.for("react.element"),t=Symbol.for("react.fragment"),n=Object.prototype.hasOwnProperty,_=e.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,f={key:!0,ref:!0,__self:!0,__source:!0};function a(e,t,a){var l,s={},u=null,y=null;for(l in void 0!==a&&(u=""+a),void 0!==t.key&&(u=""+t.key),void 0!==t.ref&&(y=t.ref),t)n.call(t,l)&&!f.hasOwnProperty(l)&&(s[l]=t[l]);if(e&&e.defaultProps)for(l in t=e.defaultProps)void 0===s[l]&&(s[l]=t[l]);return{$$typeof:o,type:e,key:u,ref:y,props:s,_owner:_.current}}_e.Fragment=t,_e.jsx=a,_e.jsxs=a},186,[43]);
-__d(function(g,r,i,a,m,e,d){m.exports={uri:"/assets/assets/character.f1ab4ae531f73dc9b0367391b95f0cad.png",width:512,height:512}},187,[]);
-__d(function(g,r,i,a,m,e,d){m.exports={uri:"/assets/assets/bean.c2045de751f300e95373409f44c3f9e4.png",width:256,height:256}},188,[]);
-__d(function(g,r,i,a,m,e,d){m.exports={uri:"/assets/assets/background.70f3fc3c8250f7710f9dc03693ca795f.png",width:500,height:740}},189,[]);
+__d(function(g,r,i,a,m,e,d){m.exports={uri:"/coffee_palation/assets/assets/character.f1ab4ae531f73dc9b0367391b95f0cad.png",width:512,height:512}},187,[]);
+__d(function(g,r,i,a,m,e,d){m.exports={uri:"/coffee_palation/assets/assets/bean.c2045de751f300e95373409f44c3f9e4.png",width:256,height:256}},188,[]);
+__d(function(g,r,i,a,m,e,d){m.exports={uri:"/coffee_palation/assets/assets/background.70f3fc3c8250f7710f9dc03693ca795f.png",width:500,height:740}},189,[]);
 __r(3);
 __r(0);
