@@ -2,6 +2,7 @@
   "name": "coffee-palation",
   "version": "2.0.0",
   "description": "A fun flappy bird style game with a coffee theme",
+  "homepage": "https://barkevsarkli.github.io/coffee_palation",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -9,22 +10,27 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:web": "expo export --platform web",
+    "predeploy": "npm run build:web && touch dist/.nojekyll",
+    "deploy": "gh-pages -d dist --dotfiles --nojekyll",
     "deploy:vercel": "npm run build:web && vercel --prod",
     "deploy:netlify": "netlify deploy --prod --dir=dist"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.21.0",
+    "@vercel/kv": "^3.0.0",
     "expo": "^54.0.31",
     "expo-av": "~13.10.4",
     "expo-status-bar": "~1.11.1",
+    "ioredis": "^5.10.0",
     "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-native": "^0.73.11",
-    "react-native-web": "~0.19.10",
-    "react-dom": "18.2.0"
+    "react-native-web": "~0.19.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "babel-preset-expo": "~10.0.0"
+    "babel-preset-expo": "~10.0.0",
+    "gh-pages": "^6.3.0"
   },
   "keywords": [
     "game",
