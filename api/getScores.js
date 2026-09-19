@@ -20,8 +20,10 @@ export default async function handler(req, res) {
         const data = await redis.get('GLOBAL_LEADERBOARD');
         const scores = data ? JSON.parse(data) : [];
 
-        // Set caching headers
-        res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
+        // The leaderboard must reflect a score the moment it is saved. Any CDN
+        // caching here serves the pre-save list back for up to a minute, which
+        // reads as the score never having been added.
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
 
         res.status(200).json({ scores });
     } catch (error) {

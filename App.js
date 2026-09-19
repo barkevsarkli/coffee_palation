@@ -287,7 +287,8 @@ function apiUrl(path) {
 
 async function getScores() {
   try {
-    const res = await fetch(apiUrl('/api/getScores'));
+    // Cache buster as well, so no intermediate proxy can hand back a stale list
+    const res = await fetch(`${apiUrl('/api/getScores')}?t=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`API request failed (${res.status})`);
     const data = await res.json();
     return Array.isArray(data.scores) ? data.scores.filter(s => s.name && s.score > 0) : [];
