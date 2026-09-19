@@ -272,10 +272,23 @@ function vibrate(ms) {
 
 // ==================== STORAGE FUNCTIONS ====================
 
+// The leaderboard functions only exist on the Vercel deployment. The game is
+// also served from GitHub Pages and from the local dev server, where a relative
+// /api path resolves to a 404, so always call the deployment directly.
+const API_ORIGIN = 'https://coffeepalationn.vercel.app';
+
+function apiUrl(path) {
+  if (Platform.OS === 'web' && typeof window !== 'undefined'
+      && window.location.origin === API_ORIGIN) {
+    return path;
+  }
+  return API_ORIGIN + path;
+}
+
 async function getScores() {
   try {
-    const res = await fetch('/api/getScores');
-    if (!res.ok) throw new Error('API request failed');
+    const res = await fetch(apiUrl('/api/getScores'));
+    if (!res.ok) throw new Error(`API request failed (${res.status})`);
     const data = await res.json();
     return Array.isArray(data.scores) ? data.scores.filter(s => s.name && s.score > 0) : [];
   } catch (e) {
@@ -284,17 +297,36 @@ async function getScores() {
   }
 }
 
+// Returns true only when the score actually reached the leaderboard, so the UI
+// can tell the player when it did not instead of silently claiming success.
 async function addScore(name, score) {
-  if (!name || score < 1) return;
+  if (!name || score < 1) return false;
   try {
-    const res = await fetch('/api/addScore', {
+    const res = await fetch(apiUrl('/api/addScore'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: name.trim(), score }),
     });
-    if (!res.ok) throw new Error('API addScore request failed');
+    if (!res.ok) throw new Error(`API addScore request failed (${res.status})`);
+    return true;
   } catch (e) {
     console.log('Error saving global score:', e);
+    return false;
+  }
+}
+
+// The password is checked on the server; nothing secret ships in this bundle.
+async function requestScoreReset(secret) {
+  try {
+    const res = await fetch(apiUrl('/api/resetScores'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret }),
+    });
+    return res.ok;
+  } catch (e) {
+    console.log('Error resetting global scores:', e);
+    return false;
   }
 }
 
@@ -1078,6 +1110,8 @@ function GameScreen({ goTo, gc }) {
   const [nameInput, setNameInput] = useState('');
   const [isHighScore, setIsHighScore] = useState(false);
   const [scoreSavedOrDeclined, setScoreSavedOrDeclined] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
 
   // Load player name from storage initially
   useEffect(() => {
@@ -1257,25 +1291,16 @@ function GameScreen({ goTo, gc }) {
 
     startingRef.current = true;
 
-    // Gizli Sıfırlama Kodu
-    if (finalName === '0zekininkusu') {
-      try {
-        await fetch('/api/resetScores', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ secret: finalName })
-        });
-      } catch (e) {
-        console.log('Error resetting global scores:', e);
-      }
+    // Hidden reset code. The name is offered to the server as a password; only
+    // the server knows whether it is the right one, so an ordinary name simply
+    // gets refused and the game starts as usual.
+    if (await requestScoreReset(finalName)) {
       await AsyncStorage.removeItem('@coffee_palation_player_name');
       setNameInput('');
       setPlayerName('');
-      if (Platform.OS === 'web') {
-        window.alert('Global Liderlik tablosu başarıyla sıfırlandı!');
-      } else {
-        alert('Global Liderlik tablosu başarıyla sıfırlandı!');
-      }
+      const msg = 'Global Liderlik tablosu başarıyla sıfırlandı!';
+      if (Platform.OS === 'web') window.alert(msg);
+      else alert(msg);
       startingRef.current = false;
       setGamePhase('name');
       return;
@@ -1384,7 +1409,14 @@ function GameScreen({ goTo, gc }) {
     if (!nameToSave) {
       nameToSave = await AsyncStorage.getItem('@coffee_palation_player_name');
     }
-    await addScore(nameToSave || 'Anonim', displayScore);
+    setSaveError('');
+    setSaving(true);
+    const ok = await addScore(nameToSave || 'Anonim', displayScore);
+    setSaving(false);
+    if (!ok) {
+      setSaveError('Skor kaydedilemedi. Bağlantını kontrol et.');
+      return;
+    }
     setScoreSavedOrDeclined(true);
   };
 
@@ -1532,10 +1564,18 @@ function GameScreen({ goTo, gc }) {
 
             {displayScore > 0 && !scoreSavedOrDeclined ? (
               <View style={styles.savePromptContainer}>
-                <Text style={styles.savePromptText}>Skorunu kaydetmek ister misin?</Text>
+                <Text style={styles.savePromptText}>
+                  {saveError || 'Skorunu kaydetmek ister misin?'}
+                </Text>
                 <View style={styles.savePromptButtons}>
-                  <TouchableOpacity style={[styles.modalBtn, styles.flexBtn, { marginRight: 5 }]} onPress={saveScoreToLeaderboard}>
-                    <Text style={styles.modalBtnText}>EVET</Text>
+                  <TouchableOpacity
+                    style={[styles.modalBtn, styles.flexBtn, { marginRight: 5 }, saving && { opacity: 0.6 }]}
+                    onPress={saveScoreToLeaderboard}
+                    disabled={saving}
+                  >
+                    <Text style={styles.modalBtnText}>
+                      {saving ? 'KAYDEDİLİYOR' : saveError ? 'TEKRAR DENE' : 'EVET'}
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.modalBtn, styles.modalBtnGray, styles.flexBtn, { marginLeft: 5 }]} onPress={declineScore}>
                     <Text style={styles.modalBtnText}>HAYIR</Text>
